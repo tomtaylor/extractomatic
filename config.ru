@@ -1,8 +1,8 @@
 require 'appengine-rack'
-require 'boilerpipe-live'
+require 'extractomatic'
 
-AppEngine::Rack.configure_app(          
-  :application => "boilerpipe",           
+AppEngine::Rack.configure_app(
+  :application => "extractomatic",
   :version => "1"
 )
 
