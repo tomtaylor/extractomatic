@@ -1,0 +1,9 @@
+Extractomatic is licensed under the MIT license, available at:
+
+http://www.opensource.org/licenses/mit-license.php
+
+Extractomatic contains the following parts which are provided under the Apache License 2.0 (http://apache.org/licenses/LICENSE-2.0.txt):
+
+  - NekoHTML
+  - Xerces
+  - Boilerpipe
