@@ -1,0 +1,5 @@
+.DS_Store
+.gems
+bin
+WEB-INF
+fix008.rb

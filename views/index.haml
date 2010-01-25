@@ -1,0 +1,107 @@
+!!!
+%html
+  %head
+    %title Boilerpipe Live
+    %link{ :rel => "stylesheet", :href => "/blueprint/screen.css", :type => "text/css", :media => "screen, projection" }
+    %link{ :rel => "stylesheet", :href => "css/blueprint/print.css", :type => "text/css", :media => "print" }
+    
+    -#<!--[if lt IE 8]>
+    -#  <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
+    -#<![endif]-->
+    
+    %link{ :rel => "stylesheet", :href => "/screen.css", :type => "text/css", :media => "screen, projection" }
+  %body
+    .container
+      %h1 Boilerpipe Live
+
+      %p Boilerpipe Live is a simple API to detect and remove surplus clutter (such as adverts, headers, footers) around the main content of a web page. It uses <a href="http://code.google.com/p/boilerpipe/">the Java library of the same name</a>.
+    
+      %h2 Usage
+      
+      %p There is one method at <code>/extract</code>, which responds to GET requests. Pass the URL of the content you wish to extract in the <code>url</code> parameter.
+    
+      %p For example, GETing <code>http://localhost:8080/extract?url=http://www.nothingtoseehere.net/2010/01/moomin_world_naantali_1.html</code> returns:
+    
+      %pre
+        %code
+          = preserve do
+            :escaped
+              {
+                "response" : {
+                  "content" : "Moomin World, Naantali\nTove Jansson\u2019s Moomins, created by... (more content)",
+                  "source" : "http://www.nothingtoseehere.net/2010/01/moomin_world_naantali_1.html"
+                },
+                "status" : "success"
+              }
+      
+      %p Boilerpipe provides a number of different extraction algorithms, which vary in effectiveness depending on the style of content you're interested in.
+    
+      %p To change algorithm, pass in an optional <code>mode</code> parameter. The mode defaults to <code>default</code>, surprisingly.
+    
+      %table
+        %thead
+          %tr
+            %th Mode
+            %th Description
+        %tbody
+          %tr
+            %td article
+            %td Uses <a href="http://boilerpipe.googlecode.com/svn/trunk/boilerpipe-core/javadoc/1.0/de/l3s/boilerpipe/extractors/ArticleExtractor.html">ArticleExtractor</a>: A full-text extractor which is tuned towards news articles. In this scenario it achieves higher accuracy than DefaultExtractor.
+          %tr
+            %td article_sentences
+            %td Uses <a href="http://boilerpipe.googlecode.com/svn/trunk/boilerpipe-core/javadoc/1.0/de/l3s/boilerpipe/extractors/ArticleSentencesExtractor.html">ArticleSentencesExtractor</a>: A full-text extractor which is tuned towards extracting sentences from news articles.
+          %tr
+            %td min_k_words
+            %td Uses <a href="http://boilerpipe.googlecode.com/svn/trunk/boilerpipe-core/javadoc/1.0/de/l3s/boilerpipe/extractors/KeepEverythingWithMinKWordsExtractor.html">KeepEverythingWithMinKWordsExtractor</a>: A full-text extractor which extracts the largest text component of a page. For news articles, it may perform better than the DefaultExtractor, but usually worse than ArticleExtractor.
+          %tr
+            %td default
+            %td Uses <a href="http://boilerpipe.googlecode.com/svn/trunk/boilerpipe-core/javadoc/1.0/de/l3s/boilerpipe/extractors/DefaultExtractor.html">DefaultExtractor</a>: A quite generic full-text extractor.
+          %tr
+            %td largest
+            %td Uses <a href="http://boilerpipe.googlecode.com/svn/trunk/boilerpipe-core/javadoc/1.0/de/l3s/boilerpipe/extractors/LargestContentExtractor.html">LargestContentExtractor</a>: A full-text extractor which extracts the largest text component of a page. For news articles, it may perform better than the DefaultExtractor, but usually worse than ArticleExtractor.
+          %tr
+            %td num_words
+            %td Uses <a href="http://boilerpipe.googlecode.com/svn/trunk/boilerpipe-core/javadoc/1.0/de/l3s/boilerpipe/extractors/NumWordsRulesExtractor.html">NumWordsRulesExtractor</a>: A quite generic full-text extractor solely based upon the number of words per block (the current, the previous and the next block).
+          
+      %h3 Errors
+    
+      %p If an error occurs, you will get a response that looks something like:
+      
+      %pre
+        %code
+          = preserve do
+            :escaped
+              {
+                "error" : {
+                  "message" : "Malformed URL",
+                  "code" : 100
+                },
+                "status" : "error"
+              }
+       
+      %p The different errors you might see are:
+      
+      %table
+        %thead
+          %tr
+            %th Code
+            %th Description
+        %tbody
+          %tr
+            %td 100
+            %td Malformed URL
+          %tr
+            %td 101
+            %td Could not fetch the URL
+          %tr
+            %td 102
+            %td Unknown extractor mode
+          %tr
+            %td 99
+            %td Unknown error
+          
+      %h2 Credits
+    
+      %p Big thanks to Christian Kohlsch&uuml;tter for releasing Boilerpipe under the Apache License 2.0.
+      
+      %p Boilerpipe Live is a service provided by <a href="http://www.newspaperclub.co.uk">Newspaper Club</a>.

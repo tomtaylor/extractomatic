@@ -1,0 +1,18 @@
+html {
+  font-size: 110%;
+}
+
+.container {
+  margin-top: 3em;
+  margin-bottom: 3em;
+  width: 710px;
+}
+
+pre {
+  background-color: rgb(195, 217, 255);
+  padding: 5px;
+}
+
+table tbody td {
+  border-bottom: 1px solid #ccc;
+}
