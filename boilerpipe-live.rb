@@ -53,6 +53,8 @@ get '/extract' do
     return_error("Could not connect", 101)
   rescue UnknownExtractor
     return_error("Unknown extractor mode", 102)
+  rescue NoUrlPresent
+    return_error("No URL requested", 103)
   rescue
     return_error("Unknown error", 99)
   else
